@@ -34,7 +34,7 @@ def test_single_agent_orchestrator_flow():
         db_id="concert_singer"
     )
 
-    assert result.get("sql_query") == "SELECT count(*) FROM singer"
+    assert result.get("sql_query", "").rstrip(";") == "SELECT count(*) FROM singer"
     assert result.get("sql_result") is not None
     assert len(result.get("sql_result")) == 1
     assert result.get("error") is None

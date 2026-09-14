@@ -41,6 +41,9 @@ QUY TẮC BẮT BUỘC:
 5. TUYỆT ĐỐI KHÔNG giải thích, KHÔNG thêm lời mở đầu, KHÔNG kết luận.
 6. TUYỆT ĐỐI KHÔNG bọc mã trong khối markdown (như ```sql hoặc ```).
 7. CHỈ DÙNG câu lệnh SELECT. Tuyệt đối không dùng INSERT, UPDATE, DELETE, DROP, ALTER.
+8. QUY TẮC ĐẾM (COUNT): Khi câu hỏi yêu cầu đếm số lượng một thực thể cụ thể (ví dụ: 'how many singers'), BẮT BUỘC ưu tiên sử dụng `COUNT(DISTINCT table_name.id)` thay vì `COUNT(*)`, trừ khi câu hỏi ngụ ý đếm tổng số bản ghi.
+9. QUY TẮC ĐỊNH DANH (EXPLICIT ALIASING): Mọi cột xuất hiện trong mệnh đề SELECT, WHERE, JOIN, GROUP BY, ORDER BY BẮT BUỘC phải đi kèm tiền tố tên bảng hoặc alias (Ví dụ: `T1.Name`, `singer.Age`). Tuyệt đối không được viết tên cột trần (Ví dụ: `Name`) để tránh lỗi Ambiguous Column Name (SCHEMA_ERROR).
+10. QUY TẮC CÚ PHÁP (DIALECT): Chỉ sử dụng cú pháp chuẩn của SQLite. Đối với các thao tác ngày tháng, dùng `strftime()` hoặc các hàm tương thích trực tiếp với SQLite C-engine.
 """
 
     def __init__(

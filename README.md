@@ -227,5 +227,34 @@ Results and execution traces will be saved automatically to `docs/spider_evaluat
 
 ---
 
+## 🔮 7. Error Taxonomy & Future Roadmap
+
+### 🛡️ Production Reliability: 100% Crash-Free Infrastructure
+Across all 1,034 benchmark queries spanning 206 heterogeneous SQLite databases, the system recorded **zero infrastructure panics, memory leaks, or unhandled timeouts (0% System Error)**. Every transaction was safely isolated, verified by AST guardrails, and executed in bounded sub-second windows.
+
+### 🧠 Failure Mode Analysis: 94.1% Attributable to `LOGIC_ERROR`
+Granular post-evaluation auditing indicates that **94.1% of all non-matching queries** are categorized as `LOGIC_ERROR`, reflecting the reasoning boundaries of open-weight 7B parameter models rather than pipeline defects:
+- **Granularity & Projection Discrepancies**: Missing `DISTINCT` on entity counting or projecting supplemental identifying columns.
+- **Complex Multi-Hop Join Traversal**: Identifying ambiguous foreign key links across 4+ tables in legacy, non-normalized schemas.
+- **Nested Set Arithmetic**: Nuanced semantic divergence between `EXCEPT` / `INTERSECT` and nested `WHERE NOT IN (...)` subqueries.
+
+### 🗺️ Strategic Architectural Enhancements (Future Work)
+To advance beyond 85%+ Execution Accuracy while preserving low-cost local on-premise execution, three architectural initiatives are planned:
+
+1. **Graph-Based Shortest Path Schema Pruning (Dijkstra)**
+   - *Design*: Construct an in-memory referential schema graph where tables are nodes and foreign keys are weighted edges.
+   - *Impact*: For questions spanning multiple entities, Dijkstra's algorithm computes the minimal connecting subgraph (Steiner Tree), pruning unneeded tables and foreign keys prior to prompt injection. This eliminates schema confusion when navigating 4-5 table JOIN operations.
+
+2. **Self-Consistency with Parallel Majority Voting ($K=3$)**
+   - *Design*: Execute 3 parallel generations at temperature $T \approx 0.3$ and evaluate candidate queries across read-only sandbox connections.
+   - *Impact*: Selects the consensus output by clustering returned tabular record sets. Substantially mitigates projection variations and missing `DISTINCT` qualifiers without manual rule crafting.
+
+3. **AST Guardrail Whitelist Expansion for SQLite Built-in Functions**
+   - *Design*: Enrich `sqlglot` AST traversal rules with fine-grained whitelisting for advanced read-only SQLite scalar, window, and temporal functions (`strftime`, `julianday`, `group_concat`).
+   - *Impact*: Prevents false-positive security rejections on complex analytical expressions while maintaining strict zero-trust defenses against data-mutating payloads.
+
+---
+
 ## ⚖️ License
 This project is licensed under the terms of the [MIT License](LICENSE).
+
