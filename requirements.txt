@@ -1,0 +1,31 @@
+# Core Deep Learning & NLP
+torch>=2.2.0
+transformers>=4.40.0
+datasets>=2.19.0
+accelerate>=0.30.0
+
+# Multi-Agent & LLM Frameworks
+langchain>=0.2.0
+langgraph>=0.1.0
+pydantic>=2.7.0
+
+# Database & SQL
+sqlalchemy>=2.0.0
+sqlparse>=0.5.0
+duckdb>=1.0.0
+
+# Financial Analysis & Market Data
+pandas>=2.2.0
+numpy>=1.26.0
+yfinance>=0.2.40
+
+# Vector Store & Embedding Evaluation
+chromadb>=0.5.0
+sentence-transformers>=3.0.0
+scikit-learn>=1.4.0
+
+# Utilities & Testing
+pyyaml>=6.0.0
+pytest>=8.2.0
+tqdm>=4.66.0
+loguru>=0.7.0

@@ -1,0 +1,32 @@
+[
+  {
+    "index": 1,
+    "table_id": "table_0",
+    "question": "what is the net change in net revenue during 2015 for entergy corporation?",
+    "gold_answer": "94.0",
+    "sql_query": "SELECT * FROM table_0 LIMIT 2",
+    "score": 0,
+    "latency_seconds": 0.1480470999958925,
+    "reason": "FAIL: Số máy tính ra không khớp với đáp án vàng '94.0' (sai số > 1%)."
+  },
+  {
+    "index": 2,
+    "table_id": "table_1",
+    "question": "what percentage of total facilities as measured in square feet are leased?",
+    "gold_answer": "0.14464",
+    "sql_query": "SELECT * FROM table_0 LIMIT 2",
+    "score": 0,
+    "latency_seconds": 0.058417700027348474,
+    "reason": "FAIL: Số máy tính ra không khớp với đáp án vàng '0.14464' (sai số > 1%)."
+  },
+  {
+    "index": 3,
+    "table_id": "table_2",
+    "question": "what is the percentage change in cash flow hedges in 2011 compare to the 2010?",
+    "gold_answer": "0.09864",
+    "sql_query": "SELECT * FROM table_0 LIMIT 2",
+    "score": 0,
+    "latency_seconds": 0.06368549997569062,
+    "reason": "FAIL: Số máy tính ra không khớp với đáp án vàng '0.09864' (sai số > 1%)."
+  }
+]

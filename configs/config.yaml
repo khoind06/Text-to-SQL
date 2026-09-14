@@ -1,0 +1,26 @@
+# Global Configuration
+project_name: "AI-Driven Financial Planning & Risk Management System"
+version: "0.1.0"
+
+database:
+  uri: "sqlite:///data/database/financial_data.db"
+  echo: false
+
+embedding:
+  model_name: "custom_financial_embedding"
+  hidden_dimension: 768
+  layer_depth: 12
+  initialization_scale: "depth_scaled"
+
+training:
+  optimizer: "hybrid_adam_adagrad"
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  num_epochs: 5
+  batch_size: 16
+
+guardrails:
+  strict_mode: true
+  max_returned_rows: 500
+  allowed_statements:
+    - "SELECT"

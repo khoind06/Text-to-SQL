@@ -1,0 +1,72 @@
+[
+  {
+    "sample_num": 1,
+    "sample_id": "ABC/2005/page_49.pdf-4",
+    "table_id": "table_228",
+    "question": "as of september 30 , 2005 , what percentage of employees that had received termination notices were actually terminated?",
+    "gold_answer": "0.9",
+    "sql_query": "SELECT CAST(REPLACE(REPLACE(REPLACE(employee_severance, '$', ''), ',', ''), ' ', '') AS REAL) / NULLIF((SELECT CAST(REPLACE(REPLACE(REPLACE(total, '$', ''), ',', ''), ' ', '') AS REAL) FROM table_228 WHERE item_name = 'Balance as of September 30, 2005'), 0) AS termination_rate\nFROM table_228\nWHERE item_name = 'Balance as of September 30, 2005';",
+    "has_hallucinated_financial_data": false,
+    "row_count": 1,
+    "score": 0,
+    "reason": "FAIL: Số máy tính ra không khớp với đáp án vàng '0.9' (sai số > 1%).",
+    "latency_seconds": 44.785,
+    "analysis_snippet": "### Báo cáo Thẩm Định Rủi Ro Tài Chính\n\n---\n\n#### 📌 Tóm tắt Chỉ số Trọng yếu & Điểm rủi ro (Risk Score: 0-100)\n\n- **Điểm"
+  },
+  {
+    "sample_num": 2,
+    "sample_id": "ETFC/2011/page_144.pdf-2",
+    "table_id": "table_51",
+    "question": "as of december 31 , 2010 , what was the ratio of collateral pledged to the bank by its derivatives counterparties to overnight and other short-term borrowings",
+    "gold_answer": "4.6",
+    "sql_query": "SELECT \n    CAST(REPLACE(REPLACE(REPLACE(face_value, '$', ''), ',', ''), ' ', '') AS REAL) / \n    NULLIF(CAST(REPLACE(REPLACE(REPLACE(annual_interest_rate, '$', ''), ',', ''), ' ', '') AS REAL), 0) AS ratio\nFROM table_51\nWHERE maturity_date = '2010';",
+    "has_hallucinated_financial_data": false,
+    "row_count": 0,
+    "score": 0,
+    "reason": "FAIL: Lỗi thực thi SQL hoặc không có kết quả (sql_result is None).",
+    "latency_seconds": 20.441,
+    "analysis_snippet": "🚨 **CẢNH BÁO NGUY HIỂM: HỆ THỐNG PHÒNG THỦ AN NINH ĐÃ KÍCH HOẠT (CIRCUIT BREAKER)**\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  },
+  {
+    "sample_num": 3,
+    "sample_id": "DISH/2010/page_117.pdf-1",
+    "table_id": "table_563",
+    "question": "what percentage of total minimum lease payments are due after 2015?",
+    "gold_answer": "0.50195",
+    "sql_query": "SELECT \n    (CAST(REPLACE(REPLACE(REPLACE(col_82_184, '$', ''), ',', ''), ' ', '') AS REAL) / \n    (SELECT SUM(CAST(REPLACE(REPLACE(REPLACE(col_82_184, '$', ''), ',', ''), ' ', '') AS REAL)) \n     FROM table_563 \n     WHERE col_2011 > '2015')) AS percentage_due_after_2015\nLIMIT 1;",
+    "has_hallucinated_financial_data": false,
+    "row_count": 0,
+    "score": 0,
+    "reason": "FAIL: Lỗi thực thi SQL hoặc không có kết quả (sql_result is None).",
+    "latency_seconds": 16.866,
+    "analysis_snippet": "🚨 **CẢNH BÁO NGUY HIỂM: HỆ THỐNG PHÒNG THỦ AN NINH ĐÃ KÍCH HOẠT (CIRCUIT BREAKER)**\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  },
+  {
+    "sample_num": 4,
+    "sample_id": "MRO/2013/page_19.pdf-4",
+    "table_id": "table_501",
+    "question": "what percentage of net undeveloped acres expiring were located in the u.s in 2014?",
+    "gold_answer": "0.24744",
+    "sql_query": "SELECT \n    CAST(REPLACE(REPLACE(REPLACE(extra_col_2, '$', ''), ',', ''), ' ', '') AS REAL) / \n    NULLIF(CAST(REPLACE(REPLACE(REPLACE(net_undeveloped_acres_expiring, '$', ''), ',', ''), ' ', '') AS REAL), 0) * \n    100.0 AS percentage_in_us\nFROM \n    table_501\nWHERE \n    item_name = 'U.S.' AND net_undeveloped_acres_expiring = '2014';",
+    "has_hallucinated_financial_data": false,
+    "row_count": 0,
+    "score": 0,
+    "reason": "FAIL: Lỗi thực thi SQL hoặc không có kết quả (sql_result is None).",
+    "latency_seconds": 19.648,
+    "analysis_snippet": "🚨 **CẢNH BÁO NGUY HIỂM: HỆ THỐNG PHÒNG THỦ AN NINH ĐÃ KÍCH HOẠT (CIRCUIT BREAKER)**\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  },
+  {
+    "sample_num": 5,
+    "sample_id": "AAL/2016/page_8.pdf-1",
+    "table_id": "table_457",
+    "question": "what portion of the total full-time employees of mainline operations are pilots and flight crew instructors?",
+    "gold_answer": "0.13202",
+    "sql_query": "SELECT CAST(REPLACE(REPLACE(REPLACE(mainline_operations, '$', ''), ',', ''), ' ', '') AS REAL) / NULLIF((SELECT CAST(REPLACE(REPLACE(REPLACE(total, '$', ''), ',', ''), ' ', '') AS REAL) FROM table_457 WHERE item_name = 'Total'), 0) AS pilots_and_flight_crew_portion_ratio\nFROM table_457\nWHERE item_name = 'Pilots and Flight Crew Training Instructors';",
+    "has_hallucinated_financial_data": false,
+    "row_count": 1,
+    "score": 1,
+    "reason": "Khớp phần trăm: Ứng viên 13.148 / 100 == Vàng 0.13202 (rel_tol <= 1%).",
+    "latency_seconds": 44.589,
+    "analysis_snippet": "### Báo cáo Thẩm Định Rủi Ro Tài Chính\n\n---\n\n#### 📌 Tóm tắt Chỉ số Trọng yếu & Điểm rủi ro (Risk Score: 0-100)\n\n- **Điểm"
+  }
+]

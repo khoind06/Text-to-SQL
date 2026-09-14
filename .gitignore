@@ -1,0 +1,40 @@
+# Python virtual environment
+.venv/
+env/
+venv/
+ENV/
+*.py[cod]
+*$py.class
+__pycache__/
+
+# Testing and caches
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Large Datasets and Binaries
+data/spider.zip
+data/spider/database/
+data/database/
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+data/*.zip
+
+# External cloned repositories
+FinQA/
+
+# Keep dev_gold.json and essential configs
+!data/spider/dev_gold.json
+
+# Logs & Temporary files
+logs/*.log
+*.tmp
+*.bak
+scratch*.py
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

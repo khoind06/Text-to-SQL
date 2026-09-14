@@ -1,0 +1,117 @@
+{
+  "tables_processed": 1147,
+  "total_real_columns": 3290,
+  "total_total_rows_marked": 741,
+  "complex_table_logs": [
+    {
+      "table_id": "table_0",
+      "columns": [
+        "item_name",
+        "amount",
+        "clean_item_name",
+        "is_total_row"
+      ],
+      "real_columns": [
+        "amount"
+      ],
+      "total_rows_marked": 0,
+      "sample_records": [
+        {
+          "item_name": "2014 net revenue",
+          "amount": 5735.0,
+          "clean_item_name": "2014 net revenue",
+          "is_total_row": 0
+        },
+        {
+          "item_name": "Retail electric price",
+          "amount": 187.0,
+          "clean_item_name": "retail electric price",
+          "is_total_row": 0
+        },
+        {
+          "item_name": "Volume/weather",
+          "amount": 95.0,
+          "clean_item_name": "volume weather",
+          "is_total_row": 0
+        }
+      ]
+    },
+    {
+      "table_id": "table_1",
+      "columns": [
+        "square_feet_in_millions",
+        "unitedstates",
+        "othercountries",
+        "total",
+        "clean_item_name",
+        "is_total_row"
+      ],
+      "real_columns": [
+        "unitedstates",
+        "othercountries",
+        "total"
+      ],
+      "total_rows_marked": 1,
+      "sample_records": [
+        {
+          "square_feet_in_millions": "Owned facilities<sup>1</sup>",
+          "unitedstates": 30.7,
+          "othercountries": 17.2,
+          "total": 47.9,
+          "clean_item_name": "owned facilities1",
+          "is_total_row": 0
+        },
+        {
+          "square_feet_in_millions": "Leased facilities<sup>2</sup>",
+          "unitedstates": 2.1,
+          "othercountries": 6.0,
+          "total": 8.1,
+          "clean_item_name": "leased facilities2",
+          "is_total_row": 0
+        },
+        {
+          "square_feet_in_millions": "Total facilities",
+          "unitedstates": 32.8,
+          "othercountries": 23.2,
+          "total": 56.0,
+          "clean_item_name": "total facilities",
+          "is_total_row": 1
+        }
+      ]
+    },
+    {
+      "table_id": "table_2",
+      "columns": [
+        "statement_of_income_classification",
+        "october_29__2011_loss_on_swaps",
+        "october_30__2010_gain_on_note",
+        "col_3_net_income_effect",
+        "col_4_gain_on_swaps",
+        "col_5_loss_on_note",
+        "col_6_net_income_effect",
+        "clean_item_name",
+        "is_total_row"
+      ],
+      "real_columns": [
+        "october_29__2011_loss_on_swaps",
+        "october_30__2010_gain_on_note",
+        "col_4_gain_on_swaps",
+        "col_5_loss_on_note"
+      ],
+      "total_rows_marked": 0,
+      "sample_records": [
+        {
+          "statement_of_income_classification": "Other income",
+          "october_29__2011_loss_on_swaps": -4614.0,
+          "october_30__2010_gain_on_note": 4614.0,
+          "col_3_net_income_effect": "$—",
+          "col_4_gain_on_swaps": 20692.0,
+          "col_5_loss_on_note": -20692.0,
+          "col_6_net_income_effect": "$—",
+          "clean_item_name": "other income",
+          "is_total_row": 0
+        }
+      ]
+    }
+  ]
+}

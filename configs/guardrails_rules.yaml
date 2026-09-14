@@ -1,0 +1,24 @@
+# SQL Risk Guardrails Rules
+risk_guardrails:
+  blocked_keywords:
+    - "DROP"
+    - "DELETE"
+    - "UPDATE"
+    - "INSERT"
+    - "ALTER"
+    - "TRUNCATE"
+    - "GRANT"
+    - "REVOKE"
+    - "EXEC"
+    - "SHUTDOWN"
+  
+  blocked_patterns:
+    - ";.*--"
+    - "union.*select"
+    - "sleep\("
+    - "benchmark\("
+    - "information_schema"
+
+  enforce_read_only: true
+  require_limit_clause: true
+  default_limit: 100

@@ -1,0 +1,18 @@
+# Multi-Agent Collaboration Configuration
+orchestrator:
+  name: "FinancialOrchestrator"
+  timeout_seconds: 60
+  max_iterations: 10
+
+agents:
+  financial_planner:
+    role: "Financial Planning & Allocation Specialist"
+    goal: "Synthesize cash-flow projections and capital allocations"
+  
+  risk_analyst:
+    role: "Risk Management & Stress-testing Auditor"
+    goal: "Detect liquidity bottlenecks, exposure risks, and compliance gaps"
+  
+  market_monitor:
+    role: "Real-time Market & Regulatory Intelligence"
+    goal: "Track macro indicators, volatility index, and financial announcements"
