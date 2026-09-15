@@ -1,6 +1,6 @@
 # Privacy-First Enterprise Text-to-SQL Pipeline
 
-[![Spider Benchmark](https://img.shields.io/badge/Yale%20Spider%20Dev-78.72%25%20EX-2ea44f?style=for-the-badge&logo=databricks&logoColor=white)](https://yale-lily.github.io/spider)
+[![Spider Benchmark](https://img.shields.io/badge/Yale%20Spider%20Dev-76.40%25%20EX-2ea44f?style=for-the-badge&logo=databricks&logoColor=white)](https://yale-lily.github.io/spider)
 [![LLM](https://img.shields.io/badge/Engine-Qwen2.5--Coder--7B-blue?style=for-the-badge&logo=ollama&logoColor=white)](https://ollama.com/library/qwen2.5-coder:7b)
 [![Deployment](https://img.shields.io/badge/Deployment-100%25%20On--Premise-red?style=for-the-badge&logo=fastapi&logoColor=white)](https://github.com/khoind06/Text-to-SQL)
 [![License](https://img.shields.io/badge/License-MIT-purple?style=for-the-badge)](LICENSE)
@@ -15,8 +15,8 @@ Enterprise data systems in banking, healthcare, and sensitive commercial domains
 
 The **Privacy-First Enterprise Text-to-SQL Pipeline** solves this bottleneck:
 - **100% Air-Gapped & On-Premise**: Powered by a quantized local `qwen2.5-coder:7b` model served via Ollama, ensuring zero schema tokens or customer data ever exit the corporate perimeter.
-- **Cross-Domain Generalization**: Achieves **78.72% Execution Accuracy (EX)** across **206 unseen relational databases** on the prestigious **Yale Spider Benchmark** without fine-tuning or domain-specific heuristics.
-- **Production-Grade Reliability**: Built on LangGraph orchestration with AST-level AST query sanitization (`sqlglot`) and read-only connection pooling, delivering deterministic, crash-free execution at **~1.54s per query**.
+- **Cross-Domain Generalization**: Achieves **76.40% Execution Accuracy (EX)** across **206 unseen relational databases** on the prestigious **Yale Spider Benchmark** without fine-tuning or domain-specific heuristics.
+- **Production-Grade Reliability**: Built on LangGraph orchestration with AST-level AST query sanitization (`sqlglot`) and read-only connection pooling, delivering deterministic, crash-free execution at **~2.17s per query**.
 
 ---
 
@@ -92,7 +92,7 @@ Standard Text-to-SQL models struggle with cross-database joins because foreign k
 
 ### 🚀 C. Ultra-Low Latency Agentic Optimization
 - Replaced multi-step iterative LLM reasoning loops with a single-agent architecture featuring prompt conditioning and post-generation AST verification.
-- Achieves an average latency of **1.54 seconds per query** (inclusive of schema introspection, LLM generation, AST validation, and database execution) on standard hardware.
+- Achieves an average latency of **2.17 seconds per query** (inclusive of schema introspection, LLM generation, AST validation, and database execution) on standard hardware.
 
 ---
 
@@ -104,32 +104,30 @@ The system was evaluated against the complete, official **Yale Spider Validation
 
 | Metric | Measured Value | Industry Standard (7B Local) | Status |
 | :--- | :---: | :---: | :---: |
-| **Execution Accuracy (EX)** | **78.72%** (814 / 1,034) | ~55.0% - 65.0% | 🏆 **SOTA Tier** |
-| **Average Query Latency** | **1.547s** | 4.0s - 8.0s | ⚡ **Production-Ready** |
-| **Syntactic SQL Validity** | **98.26%** (1,016 / 1,034) | ~85.0% | ✅ **Robust** |
+| **Execution Accuracy (EX)** | **76.40%** (790 / 1,034) | ~55.0% - 65.0% | 🏆 **SOTA Tier** |
+| **Average Query Latency** | **2.166s** | 4.0s - 8.0s | ⚡ **Production-Ready** |
+| **Syntactic SQL Validity** | **97.87%** (1,012 / 1,034) | ~85.0% | ✅ **Robust** |
 | **System Crash / Panic Rate** | **0.00%** (0 / 1,034) | N/A | 🔒 **100% Reliable** |
 
 ```
-Execution Accuracy (EX):  ███████████████████▍     78.72% (814 / 1,034)
-Syntactic Validity:       ████████████████████████▌ 98.26% (1,016 / 1,034)
+Execution Accuracy (EX):  ███████████████████▍     76.40% (790 / 1,034)
+Syntactic Validity:       ████████████████████████▌ 97.87% (1,012 / 1,034)
 System Infrastructure:    █████████████████████████ 100.00% Crash-Free
 ```
 
-### Transparent Error Analysis (220 Failed Samples)
-A detailed audit of the 220 failed samples shows that **zero errors were caused by system crashes or infrastructure timeouts**:
+### Transparent Error Analysis (244 Failed Samples)
+A detailed audit of the 244 non-matching samples shows that **zero errors were caused by system crashes or infrastructure timeouts**:
 
 ```mermaid
-pie title Error Distribution Breakdown (220 Samples)
-    "Column / Projection Granularity" : 45.5
-    "Implicit Multi-Table JOIN Keys" : 27.3
-    "Set Operations (EXCEPT / NOT IN)" : 18.2
-    "Syntactic / Schema Mismatch" : 9.0
+pie title Error Distribution Breakdown (244 Samples)
+    "Logic & Projection Nuances" : 90.2
+    "Schema & Ambiguity" : 9.0
+    "Guardrail Filtered" : 0.8
 ```
 
-- **45.5% — Projection Granularity Differences**: The model generated semantically correct data but included extra identifying columns (e.g., `SELECT T1.name, T2.score` vs. gold `SELECT T1.name`) or omitted a `DISTINCT` keyword where duplicate rows were semantically acceptable.
-- **27.3% — Implicit Multi-Table JOIN Keys**: Queries requiring 4+ tables where foreign key references used non-standard abbreviation aliases in legacy schemas.
-- **18.2% — Advanced Set Operations**: Subtle behavioral differences between `EXCEPT` / `INTERSECT` and nested `WHERE id NOT IN (...)` clauses.
-- **9.0% — Syntactic / Dialect Mismatches**: Edge cases where SQLite functions collided with ANSI SQL standards.
+- **90.2% (220/244) — Semantic & Projection Nuances (`LOGIC_ERROR`)**: The model queried valid records but differed in projection granularity (e.g. omitted a `DISTINCT` on entity counts, projected extra identifying attributes, or diverged on nested `EXCEPT` vs. `NOT IN` subqueries).
+- **9.0% (22/244) — Schema & Column Ambiguity (`SCHEMA_ERROR`)**: Complex 4+ table schemas where implicit abbreviation keys collided across joined tables.
+- **0.8% (2/244) — Guardrail Interceptions (`GUARDRAIL_BLOCKED`)**: AST guardrail safely aborted ambiguous multi-statement or non-SELECT tokens.
 
 ---
 
@@ -176,7 +174,7 @@ Text-to-SQL/
 
 ## 🚀 6. Quick Start & Reproducibility
 
-Follow these steps to reproduce the **78.72% Execution Accuracy** benchmark on your local machine:
+Follow these steps to reproduce the **76.40% Execution Accuracy** benchmark on your local machine:
 
 ### Step 1: Clone Repository & Set Up Environment
 ```bash
@@ -232,8 +230,8 @@ Results and execution traces will be saved automatically to `docs/spider_evaluat
 ### 🛡️ Production Reliability: 100% Crash-Free Infrastructure
 Across all 1,034 benchmark queries spanning 206 heterogeneous SQLite databases, the system recorded **zero infrastructure panics, memory leaks, or unhandled timeouts (0% System Error)**. Every transaction was safely isolated, verified by AST guardrails, and executed in bounded sub-second windows.
 
-### 🧠 Failure Mode Analysis: 94.1% Attributable to `LOGIC_ERROR`
-Granular post-evaluation auditing indicates that **94.1% of all non-matching queries** are categorized as `LOGIC_ERROR`, reflecting the reasoning boundaries of open-weight 7B parameter models rather than pipeline defects:
+### 🧠 Failure Mode Analysis: 90.2% Attributable to `LOGIC_ERROR`
+Granular post-evaluation auditing indicates that **90.2% of all non-matching queries** (220 / 244) are categorized as `LOGIC_ERROR`, reflecting the reasoning boundaries of open-weight 7B parameter models rather than pipeline defects:
 - **Granularity & Projection Discrepancies**: Missing `DISTINCT` on entity counting or projecting supplemental identifying columns.
 - **Complex Multi-Hop Join Traversal**: Identifying ambiguous foreign key links across 4+ tables in legacy, non-normalized schemas.
 - **Nested Set Arithmetic**: Nuanced semantic divergence between `EXCEPT` / `INTERSECT` and nested `WHERE NOT IN (...)` subqueries.
